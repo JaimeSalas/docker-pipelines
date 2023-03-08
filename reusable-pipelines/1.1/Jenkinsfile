@@ -50,8 +50,7 @@ pipeline {
                 archiveArtifacts('todo-app/app/')
             }
         }
-    }
-    
+    }    
 }
 
 String getVersionSuffix() {
