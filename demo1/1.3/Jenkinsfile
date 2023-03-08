@@ -13,13 +13,19 @@ pipeline {
             }
             parallel { // [1, 2][1, 2, 3]
                 stage('linux-arm64') {
-                    echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    steps {
+                        echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    }
                 }
                 stage('linux-amd64') {
-                    echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    steps {
+                        echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    }
                 }
                 stage('windows-amd64') {
-                    echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    steps {
+                        echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+                    }
                 }
             }
         }
