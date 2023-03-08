@@ -47,7 +47,11 @@ pipeline {
                 expression { return params.RC }
             }
             steps {
-                archiveArtifacts('todo-app/app')
+                sh '''
+                    cd todo-app 
+                    ls -al 
+                '''
+                // archiveArtifacts('./todo-app/app')
             }
         }
     }
