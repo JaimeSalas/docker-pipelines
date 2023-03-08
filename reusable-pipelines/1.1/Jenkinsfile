@@ -1,0 +1,39 @@
+pipeline {
+    agent any 
+    
+    environment {
+        VERSION  = sh([ script: 'cd ./tod-app && npx -c \'echo $npm_package_version\'', returnStdout: true ]).trim();
+        VERSION_RC = "rc.2"
+    }
+    
+    stages {
+        stage('Audit Tools') {
+            steps {
+                sh '''
+                    git version
+                    docker version
+                    node --version
+                    npm version
+                '''
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('./todo-app') {
+                    sh '''
+                        npm install
+                        npm run build
+                    '''
+                }
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                dir('./todo-app') {
+                    sh 'npm test'
+                }
+            }
+        }
+    }
+    
+}
