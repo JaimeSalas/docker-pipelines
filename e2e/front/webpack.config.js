@@ -1,3 +1,5 @@
+const DotEnv = require('dotenv-webpack');
+
 module.exports = {
     entry: ['./index.js'],
     output: {
@@ -14,5 +16,12 @@ module.exports = {
     },
     devServer: {
         port: 8081,
-    }
+    },
+    plugins: [
+        new DotEnv({
+            path:'./.env',
+            allowEmptyValues: true,
+            systemvars: true
+        })
+    ]
 };
