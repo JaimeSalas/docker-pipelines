@@ -11,8 +11,8 @@ pipeline {
                     node --version
                     npm version
                 '''
+                sh 'printenv'
             }
-            sh 'printenv'
         }
         stage('Build') {
             steps {
