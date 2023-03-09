@@ -1,0 +1,47 @@
+pipeline {
+  agent any
+  environment {
+    imageName = 'jaimesalas/my-api-app'
+  }
+  stages {
+    stage('Install dependencies') {
+      agent {
+        docker {
+          image 'node:14-alpine'
+          reuseNode true
+        }
+      }
+      steps {
+        dir('multibranch') {
+            sh 'npm ci'
+        }
+      }
+    }
+    stage('Tests') {
+      agent {
+        docker {
+          image 'node:14-alpine'
+          reuseNode true
+        }
+      }
+      steps {
+        dir('multibranch') {
+            sh 'npm test'
+        }
+      }
+    }
+    stage('Build image & push to DockerHub') {
+      steps {
+        dir('multibranch') {
+            script {
+                def image = docker.build(imageName)
+                withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+                    image.push()
+                    sh 'docker rmi $imageName'
+                }
+            }
+        }
+      }
+    }
+  }
+}
