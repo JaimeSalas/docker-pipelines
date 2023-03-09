@@ -4,6 +4,9 @@ import { startConnection } from './dals/data-access';
 import { todoDALFactory } from './dals/todos/todo.dal';
 import { mapTodoEntity, mapTodoEntityCollection, mapTodoModel } from './models/todo.model';
 
+// TODO: Remvove
+// throw Error('You are doomed');
+
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   require('dotenv').config();
 }

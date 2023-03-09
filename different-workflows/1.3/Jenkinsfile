@@ -1,0 +1,14 @@
+def image 
+
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    image = docker.build("jaimesalas/todo-app-dc-pipelines:1", "--pull -f todo-app/Dockerfile todo-app")           
+                }
+            }
+        }
+    }
+}
