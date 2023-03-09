@@ -1,0 +1,41 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('audit tools') {
+            steps {
+                sh ''' 
+                    docker -v 
+                    docker-compose -v 
+                '''
+            }
+        }
+        stage('unit test') {
+            agent {
+                docker {
+                    image 'node:14.15.4-buster'
+                }
+            }
+            steps {
+                dir('integration-tests/hangman-back/') {
+                    sh '''
+                        npm ci 
+                        npm test
+                    '''
+                }
+            }
+        }
+        // stage('integration test') {
+        //     agent any
+        //     steps {
+                
+        //     }
+        // }
+    }
+    
+    post {
+        always {
+            echo 'clean reources'
+        }
+    }
+}
