@@ -1,7 +1,7 @@
 def front 
 def back
 
-def withDockerNetwork(Clouser inner) {
+def withDockerNetwork(Clousure inner) {
     try {
         networkId = UUID.randomUUID().toString();
         sh "docker network create ${networkId}";
