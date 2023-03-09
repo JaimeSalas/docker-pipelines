@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'docker build -t jaimesalas/session-docker-pipeline:0.0.1'
+                sh 'docker build -t jaimesalas/session-docker-pipeline:0.0.1 .'
             }
         }
         stage('Smoke Test') {
