@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            dir 'different-workflows'
+            image 'jaimesalas/node-builder:1'
         }
     }
     stages {
@@ -12,15 +12,23 @@ pipeline {
                     npm version
                 '''
             }
+            sh 'printenv'
         }
         stage('Build') {
             steps {
-                sh 'docker build -t jaimesalas/session-docker-pipeline:0.0.1 .'
+                dir("$WORKSPACE/todo-app") {
+                    sh '''
+                        npm install
+                        npm run build 
+                    '''
+                }
             }
         }
-        stage('Smoke Test') {
+        stage('Unit Test') {
             steps {
-                sh 'docker run jaimesalas/session-docker-pipeline:0.0.1'
+                dir("$WORKSPACE/todo-app") {
+                    sh 'npm test'
+                }
             }
         }
     }
