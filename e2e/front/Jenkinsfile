@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("jaimesalas/e2e", "--pull -f e2e/front/Dockerfile.e2e e2e/front")           
+                }
+            }
+        }
+        stage('e2e') {
+            steps {
+                script {
+                    docker.script.sh(script: "docker run --rm jaimesalas/e2e npm run test:e2e:local", returnStdout: false)
+                }
+            }
+        }
+    }
+}
